@@ -1,0 +1,10 @@
+{
+  "name": "chatbot-170",
+  "version": "1.0.0",
+  "description": "Chatbot 170 is an experiment in using automotive APIs to assist motorists going about their busy daily life to get more out of their car.",
+  "main": "app.js",
+  "repository": "git@github.com:RichardSlater/chatbot-170.git",
+  "author": "Richard Slater <richard.slater@amido.com>",
+  "license": "Apache2",
+  "private": false
+}
