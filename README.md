@@ -2,6 +2,8 @@
 
 Chatbot 170 is an experiment in using automotive APIs to assist motorists going about their busy daily life to get more out of their car.
 
+[![js-standard-style](https://cdn.rawgit.com/standard/standard/master/badge.svg)](http://standardjs.com)
+
 ## Infrastructure
 
 Chatbot 170 is hosted in [Microsoft Azure][azure] using [Azure Kubernetes Service][aks], a high performance and high scale hosting platform for Docker workloads.  Provisioning of the required infrastructure in Azure is accomplished using [HashiCorp Terraform][tf].
