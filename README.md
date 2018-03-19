@@ -68,6 +68,17 @@ Create a container in the storage account:
 
     az storage container create --name tfstate --account-key ${ACCOUNT_KEY} --account-name chatbot170tfstatestor
 
+
+#### Setup Azure AD Credential for Access to KeyVault
+
+    $KEYVAULT_LOGIN = "keyvault-chatbot170"
+    az account set --subscription="${ARM_SUBSCRIPTION_ID}"
+    $ARM_TENANT = az account show --query "{tenantId:tenantId}" --subscription ${ARM_SUBSCRIPTION_ID} --output tsv
+    $KEYVAULT_PASSWORD = az ad sp create-for-rbac --role="Contributor" --name="${KEYVAULT_LOGIN}" --scopes="/subscriptions/${ARM_SUBSCRIPTION_ID}" --query password -o tsv
+    $KEYVAULT_APPID = az ad app list --display-name ${KEYVAULT_LOGIN} --query [].appId -o tsv
+    az login --service-principal -u "${KEYVAULT_APPID}" -p "${KEYVALT_PASSWORD}" --tenant "${ARM_TENANT}"
+    az vm list-sizes --location uksouth
+
   [azure]: https://azure.microsoft.com/en-gb/
   [aks]: https://www.google.co.uk/search?q=Azure+Kubernetes+Service
   [tf]: https://www.terraform.io/

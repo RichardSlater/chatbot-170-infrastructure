@@ -1,19 +1,30 @@
+import PerformanceManagement from './azure/PerformanceManagement.mjs'
+const apm = new PerformanceManagement()
+
 const restify = require('restify')
 const builder = require('botbuilder')
-const azure = require('botbuilder-azure');
+
+const port = process.env.port || process.env.PORT || 3978
+
+// TODO: Move to Secret Management
+const appId = process.env.MicrosoftAppId
+const appPassword = process.env.MicrosoftAppPassword
+// END TODO
 
 const server = restify.createServer()
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-  console.log(`${server.name} listening to ${server.url}`)
+server.listen(port, function () {
+  apm.serverStart(server.name, server.url)
 })
 
 const connector = new builder.ChatConnector({
-  appId: process.env.MicrosoftAppId,
-  appPassword: process.env.MicrosoftAppPassword
+  appId: appId,
+  appPassword: appPassword
 })
 
 server.post('/api/messages', connector.listen())
 
 const bot = new builder.UniversalBot(connector, function (session) {
-  session.send(`You said: ${session.message.text}`)
+  const message = `You said: ${session.message.text}`
+  apm.traceBotMessage(message)
+  session.send(message)
 })
