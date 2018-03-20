@@ -63,7 +63,7 @@ resource "azurerm_storage_account" "dev" {
 }
 
 resource "azurerm_storage_table" "dev" {
-  name                 = "dev"
+  name                 = "development"
   resource_group_name  = "${azurerm_resource_group.dev.name}"
   storage_account_name = "${azurerm_storage_account.dev.name}"
 }
