@@ -1,11 +1,11 @@
 language: none
 
 resources:
-  - name: azCliConfig
+  - name: azure-cli-configuration
     type: cliConfig
     integration: Azure (Chatbot Experiments)
 
-  - name: githubChatBot170Infra
+  - name: github-chatbot-170-infrastructure
     type: gitRepo
     integration: github
     pointer:
@@ -21,16 +21,20 @@ resources:
 
 jobs:
   - name: infrastructure-provisioning
-    type: runSh
+    type: runCLI
     steps:
-      - IN: githubChatBot170Infra
-      - IN: azCliConfig
+      - IN: github-chatbot-170-infrastructure
+      - IN: azure-cli-configuration
       - TASK:
         - script: >
-            export ARM_SUBSCRIPTION_ID=$AZCLICONFIG_INTEGRATION_SUBSCRIPTIONID ARM_CLIENT_ID=$AZCLICONFIG_INTEGRATION_USERNAME ARM_CLIENT_SECRET=$AZCLICONFIG_INTEGRATION_PASSWORD ARM_TENANT_ID=$AZCLICONFIG_INTEGRATION_TENANTID
+            export
+            ARM_SUBSCRIPTION_ID=$AZCLICONFIG_INTEGRATION_SUBSCRIPTIONID
+            ARM_CLIENT_ID=$AZCLICONFIG_INTEGRATION_USERNAME
+            ARM_CLIENT_SECRET=$AZCLICONFIG_INTEGRATION_PASSWORD
+            ARM_TENANT_ID=$AZCLICONFIG_INTEGRATION_TENANTID
         - script: |
             terraform apply --auto-approve
     on_success:
-      script:
-        - echo "Chatbot 170 Infrastructure provissioning was successful."
-      notify: amido-chatbots
+      - script: echo "SUCCESS"
+    on_failure:
+      - script: echo "FAILURE"
