@@ -34,6 +34,7 @@ jobs:
             ARM_TENANT_ID=$AZURE_CLI_CONFIGURATION_TENANTID
         - script: |
             cd $GITHUB_CHATBOT_170_INFRASTRUCTURE_STATE
+            terraform get
             terraform apply
     on_success:
       - script: echo "SUCCESS"
