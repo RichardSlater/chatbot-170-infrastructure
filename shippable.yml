@@ -33,7 +33,7 @@ jobs:
             ARM_CLIENT_SECRET=$AZCLICONFIG_INTEGRATION_PASSWORD
             ARM_TENANT_ID=$AZCLICONFIG_INTEGRATION_TENANTID
         - script: |
-            terraform apply --auto-approve
+            terraform apply
     on_success:
       - script: echo "SUCCESS"
     on_failure:
