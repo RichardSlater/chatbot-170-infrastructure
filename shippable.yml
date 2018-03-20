@@ -1,3 +1,5 @@
+language: none
+
 resources:
   - name: azCliConfig
     type: cliConfig
