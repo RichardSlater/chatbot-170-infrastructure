@@ -1,11 +1,11 @@
 language: none
 
 resources:
-  - name: azure-cli-configuration
+  - name: azure_cli_configuration
     type: cliConfig
     integration: Azure (Chatbot Experiments)
 
-  - name: github-chatbot-170-infrastructure
+  - name: github_chatbot_170_infrastructure
     type: gitRepo
     integration: github
     pointer:
@@ -23,16 +23,17 @@ jobs:
   - name: infrastructure-provisioning
     type: runCLI
     steps:
-      - IN: github-chatbot-170-infrastructure
-      - IN: azure-cli-configuration
+      - IN: github_chatbot_170_infrastructure
+      - IN: azure_cli_configuration
       - TASK:
         - script: >
             export
-            ARM_SUBSCRIPTION_ID=$AZCLICONFIG_INTEGRATION_SUBSCRIPTIONID
-            ARM_CLIENT_ID=$AZCLICONFIG_INTEGRATION_USERNAME
-            ARM_CLIENT_SECRET=$AZCLICONFIG_INTEGRATION_PASSWORD
-            ARM_TENANT_ID=$AZCLICONFIG_INTEGRATION_TENANTID
+            ARM_SUBSCRIPTION_ID=$AZURE_CLI_CONFIGURATION_SUBSCRIPTIONID
+            ARM_CLIENT_ID=$AZURE_CLI_CONFIGURATION_USERNAME
+            ARM_CLIENT_SECRET=$AZURE_CLI_CONFIGURATION_PASSWORD
+            ARM_TENANT_ID=$AZURE_CLI_CONFIGURATION_TENANTID
         - script: |
+            cd $GITHUB_CHATBOT_170_INFRASTRUCTURE_STATE
             terraform apply
     on_success:
       - script: echo "SUCCESS"
