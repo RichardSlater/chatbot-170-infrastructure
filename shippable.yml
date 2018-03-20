@@ -1,7 +1,25 @@
-language: node_js
-node_js:
-  - 9.0.0
+resources:
+  - name: azCliConfig
+    type: cliConfig
+    integration: Azure (Chatbot Experiments)
 
-env:
-  global:
-    - secure: PO8fGHUYf9LucbeT4ThThdD36rUor0Y/N8afDh6nwW1AZQoahjBuD6JJTKxteuD42tAt6LzEsWlGPx/T9NP1ktCBDhcsqvga/h4ug6hGWDVuX/DKB+ZqoaV6V8Yc6RxQftIBv+n8ir4Y8TTd/xMnnPYkDtBcx/b9/BGRL73vKPpg3hychxrIr9Eqqguh6VFm3UJDbm+CZJdFLK0ZffL2ERaktqXdK1dReTf6yC9Doeik+4upY7baPWNQ/7iwQqP7X+AoqJk/Ei0uHCxGsTANcB2TNdI3/ay3sp5FpRyK2Kp/evP/hNMdRLZqnaWGpzXGwIn62Io1qB5pITq055F5LQ==
+  - name: githubChatBot170Infra
+    type: gitRepo
+    integration: github
+    pointer:
+      sourcename: RichardSlater/chatbot-170-infrastructure
+      branch: master
+
+jobs:
+  - name: infrastructure-provisioning
+    type: runSh
+    steps:
+      - IN: githubChatBot170Infra
+      - IN: azCliConfig
+      - TASK:
+        - script: >
+            export ARM_SUBSCRIPTION_ID=$AZCLICONFIG_INTEGRATION_SUBSCRIPTIONID ARM_CLIENT_ID=$AZCLICONFIG_INTEGRATION_USERNAME ARM_CLIENT_SECRET=$AZCLICONFIG_INTEGRATION_PASSWORD ARM_TENANT_ID=$AZCLICONFIG_INTEGRATION_TENANTID
+
+        # Execute Terraform script
+        - script: |
+            terraform apply --auto-approve

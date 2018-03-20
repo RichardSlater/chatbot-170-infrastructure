@@ -1,0 +1,3 @@
+module "uksouth" {
+  source = "./uksouth"
+}
