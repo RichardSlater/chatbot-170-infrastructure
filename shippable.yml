@@ -1,21 +1,36 @@
 language: none
 
-infra:
-  pre_prov:
-    - terraform plan
+resources:
+  - name: azCliConfig
+    type: cliConfig
+    integration: Azure (Chatbot Experiments)
 
-  prov:
-    - terraform apply
+  - name: githubChatBot170Infra
+    type: gitRepo
+    integration: github
+    pointer:
+      sourcename: RichardSlater/chatbot-170-infrastructure
+      branch: master
 
-  post_prov:
-    - yes yes 2>/dev/null | terraform destroy -state=/shippableci/shippable/provision/terraform.tfstate
-
-integrations:
-  notifications:
-    - integrationName: email
-      type: email
+  - name: amido-chatbots-notify
+    type: notification
+    integration: amido-chatbots
+    versionTemplate:
       recipients:
-        - richard.slater@amido.com
-      on_success: always
-      on_failure: always
-      on_start: always
+        - "#chatbots"
+
+jobs:
+  - name: infrastructure-provisioning
+    type: runSh
+    steps:
+      - IN: githubChatBot170Infra
+      - IN: azCliConfig
+      - TASK:
+        - script: >
+            export ARM_SUBSCRIPTION_ID=$AZCLICONFIG_INTEGRATION_SUBSCRIPTIONID ARM_CLIENT_ID=$AZCLICONFIG_INTEGRATION_USERNAME ARM_CLIENT_SECRET=$AZCLICONFIG_INTEGRATION_PASSWORD ARM_TENANT_ID=$AZCLICONFIG_INTEGRATION_TENANTID
+        - script: |
+            terraform apply --auto-approve
+    on_success:
+      script:
+        - echo "Chatbot 170 Infrastructure provissioning was successful."
+      notify: amido-chatbots
