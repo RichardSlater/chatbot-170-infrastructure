@@ -1,8 +1,6 @@
-# Chatbot 170
+# Chatbot 170 Infrastructure
 
-Chatbot 170 is an experiment in using automotive APIs to assist motorists going about their busy daily life to get more out of their car.
-
-[![js-standard-style](https://cdn.rawgit.com/standard/standard/master/badge.svg)](http://standardjs.com)
+[Chatbot 170][cb17-github] is an experiment in using automotive APIs to assist motorists going about their busy daily life to get more out of their car.
 
 ## Infrastructure
 
@@ -35,16 +33,6 @@ Query the Azure Active Directory tenant for the subscription:
 Create credentials for Terraform to use:
 
     az ad sp create-for-rbac --role="Contributor" --name="terraform-chatbot-170" --scopes="/subscriptions/${SUBSCRIPTION_ID}"
-
-Make a note of the `appId` and `password` for future use.
-
-Login using the Azure CLI to the newly created Service Principal:
-
-    az login --service-principal -u "terraform-chatbot-170" -p "${PASSWORD}" --tenant "${TENANT}"
-
-Run a read-only command to validate the principal works as expected:
-
-    az vm list-sizes --location uksouth
 
 Create and encrypt your environment variables:
 
@@ -79,6 +67,7 @@ Create a container in the storage account:
     az login --service-principal -u "${KEYVAULT_APPID}" -p "${KEYVALT_PASSWORD}" --tenant "${ARM_TENANT}"
     az vm list-sizes --location uksouth
 
+  [cb170-github]: https://github.com/RichardSlater/chatbot-170
   [azure]: https://azure.microsoft.com/en-gb/
   [aks]: https://www.google.co.uk/search?q=Azure+Kubernetes+Service
   [tf]: https://www.terraform.io/
