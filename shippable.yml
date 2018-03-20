@@ -1,27 +1,21 @@
 language: none
 
-resources:
-  - name: azCliConfig
-    type: cliConfig
-    integration: Azure (Chatbot Experiments)
+infra:
+  pre_prov:
+    - terraform plan
 
-  - name: githubChatBot170Infra
-    type: gitRepo
-    integration: github
-    pointer:
-      sourcename: RichardSlater/chatbot-170-infrastructure
-      branch: master
+  prov:
+    - terraform apply
 
-jobs:
-  - name: infrastructure-provisioning
-    type: runSh
-    steps:
-      - IN: githubChatBot170Infra
-      - IN: azCliConfig
-      - TASK:
-        - script: >
-            export ARM_SUBSCRIPTION_ID=$AZCLICONFIG_INTEGRATION_SUBSCRIPTIONID ARM_CLIENT_ID=$AZCLICONFIG_INTEGRATION_USERNAME ARM_CLIENT_SECRET=$AZCLICONFIG_INTEGRATION_PASSWORD ARM_TENANT_ID=$AZCLICONFIG_INTEGRATION_TENANTID
+  post_prov:
+    - yes yes 2>/dev/null | terraform destroy -state=/shippableci/shippable/provision/terraform.tfstate
 
-        # Execute Terraform script
-        - script: |
-            terraform apply --auto-approve
+integrations:
+  notifications:
+    - integrationName: email
+      type: email
+      recipients:
+        - richard.slater@amido.com
+      on_success: always
+      on_failure: always
+      on_start: always
