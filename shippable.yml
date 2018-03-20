@@ -9,7 +9,7 @@ resources:
     type: gitRepo
     integration: github
     pointer:
-      sourcename: RichardSlater/chatbot-170-infrastructure
+      sourcename: richardslater/chatbot-170-infrastructure
       branch: master
 
   - name: amido-chatbots-notify
