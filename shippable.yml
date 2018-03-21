@@ -26,10 +26,15 @@ jobs:
       - IN: github_chatbot_170_infrastructure
       - IN: azure_cli_configuration
       - TASK:
-        - runtime:
-            options:
-              imageName: drydock/u16
-              imageTag: v5.8.2
+        - script: |
+            export TF_VERSION=0.11.4
+            export TF_FILE=terraform_"$TF_VERSION"_linux_amd64.zip
+            mkdir -p /tmp/terraform
+            wget -nv https://releases.hashicorp.com/terraform/$TF_VERSION/$TF_FILE
+            unzip -o $TF_FILE -d /tmp/terraform
+            sudo chmod +x /tmp/terraform/terraform
+            mv /tmp/terraform/terraform /usr/bin/terraform
+            terraform --version
         - script: >
             export
             ARM_SUBSCRIPTION_ID=$AZURE_CLI_CONFIGURATION_SUBSCRIPTIONID
