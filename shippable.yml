@@ -12,13 +12,6 @@ resources:
       recipients:
         - "#chatbots"
 
-  - name: chatbot-170-infrastructure_master
-    type: gitRepo
-    integration: github
-    pointer:
-      sourceName: RichardSlater/chatbot-170-infrastructure
-      branch: master
-
 jobs:
   - name: provisioning
     type: runSh
