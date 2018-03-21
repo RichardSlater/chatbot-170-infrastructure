@@ -56,6 +56,7 @@ resource "azurerm_storage_account" "dev" {
   location                 = "${azurerm_resource_group.dev.location}"
   account_tier             = "Standard"
   account_replication_type = "GRS"
+  enable_blob_encryption   = "true"
 
   tags {
     environment = "Development"
