@@ -13,7 +13,7 @@ resources:
         - "#chatbots"
 
 jobs:
-  - name: provisioning-infrastructure
+  - name: provisioning
     type: runSh
     steps:
       - IN: azure_cli_configuration
@@ -39,6 +39,36 @@ jobs:
             terraform init
             terraform get
             terraform apply --auto-approve
+    on_success:
+      - script: echo "SUCCESS"
+    on_failure:
+      - script: echo "FAILURE"
+  - name: deprovisioning
+    type: runSh
+    steps:
+      - IN: azure_cli_configuration
+      - TASK:
+        - script: |
+            export TF_VERSION=0.11.3
+            export TF_FILE=terraform_"$TF_VERSION"_linux_amd64.zip
+            mkdir -p /tmp/terraform
+            wget -nv https://releases.hashicorp.com/terraform/$TF_VERSION/$TF_FILE
+            unzip -o $TF_FILE -d /tmp/terraform
+            sudo chmod +x /tmp/terraform/terraform
+            mv /tmp/terraform/terraform /usr/bin/terraform
+            terraform --version
+        - script: >
+            export
+            ARM_SUBSCRIPTION_ID="$(az account show --query "{id:id}" --output tsv)"
+            ARM_CLIENT_ID=$AZURE_CLI_CONFIGURATION_INTEGRATION_APPID
+            ARM_CLIENT_SECRET=$AZURE_CLI_CONFIGURATION_INTEGRATION_PASSWORD
+            ARM_TENANT_ID=$AZURE_CLI_CONFIGURATION_INTEGRATION_TENANT
+        - script: |
+            cd $GITHUB_CHATBOT_170_INFRASTRUCTURE_STATE
+            terraform --version
+            terraform init
+            terraform get
+            terraform destroy -force
     on_success:
       - script: echo "SUCCESS"
     on_failure:
