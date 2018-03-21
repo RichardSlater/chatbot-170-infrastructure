@@ -35,7 +35,7 @@ jobs:
             ARM_CLIENT_SECRET=$AZURE_CLI_CONFIGURATION_INTEGRATION_PASSWORD
             ARM_TENANT_ID=$AZURE_CLI_CONFIGURATION_INTEGRATION_TENANT
         - script: |
-            cd "$CHATBOT-170-INFRASTRUCTURE_MASTER_STATE"
+            cd -- "$CHATBOT-170-INFRASTRUCTURE_MASTER_STATE"
             terraform --version
             terraform init
             terraform get
@@ -67,7 +67,7 @@ jobs:
             ARM_CLIENT_SECRET=$AZURE_CLI_CONFIGURATION_INTEGRATION_PASSWORD
             ARM_TENANT_ID=$AZURE_CLI_CONFIGURATION_INTEGRATION_TENANT
         - script: |
-            cd "$CHATBOT-170-INFRASTRUCTURE_MASTER_STATE"
+            cd -- "$CHATBOT-170-INFRASTRUCTURE_MASTER_STATE"
             terraform --version
             terraform init
             terraform get
