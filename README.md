@@ -1,6 +1,6 @@
 # Chatbot 170 Infrastructure
 
-[Chatbot 170][cb17-github] is an experiment in using automotive APIs to assist motorists going about their busy daily life to get more out of their car.
+[Chatbot 170][cb170-github] is an experiment in using automotive APIs to assist motorists going about their busy daily life to get more out of their car.
 
 ## Infrastructure
 
