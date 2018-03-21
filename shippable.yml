@@ -44,6 +44,7 @@ jobs:
         - script: |
             cd $GITHUB_CHATBOT_170_INFRASTRUCTURE_STATE
             terraform --version
+            terraform init
             terraform get
             terraform apply
     on_success:
