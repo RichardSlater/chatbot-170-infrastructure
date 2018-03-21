@@ -26,17 +26,17 @@ jobs:
       - IN: github_chatbot_170_infrastructure
       - IN: azure_cli_configuration
       - TASK:
-          runtime:
+        - runtime:
             options:
               imageName: drydock/u16
               imageTag: v5.8.2
-          script: >
+        - script: >
             export
             ARM_SUBSCRIPTION_ID=$AZURE_CLI_CONFIGURATION_SUBSCRIPTIONID
             ARM_CLIENT_ID=$AZURE_CLI_CONFIGURATION_USERNAME
             ARM_CLIENT_SECRET=$AZURE_CLI_CONFIGURATION_PASSWORD
             ARM_TENANT_ID=$AZURE_CLI_CONFIGURATION_TENANTID
-          script: |
+        - script: |
             cd $GITHUB_CHATBOT_170_INFRASTRUCTURE_STATE
             terraform --version
             terraform get
