@@ -20,7 +20,7 @@ resources:
         - "#chatbots"
 
 jobs:
-  - name: infrastructure-provisioning
+  - name: provisioning-infrastructure
     type: runSh
     steps:
       - IN: github_chatbot_170_infrastructure
