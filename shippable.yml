@@ -5,13 +5,6 @@ resources:
     type: cliConfig
     integration: Azure (Chatbot Experiments)
 
-  - name: github_chatbot_170_infrastructure
-    type: gitRepo
-    integration: github
-    pointer:
-      sourceName: RichardSlater/chatbot-170-infrastructure
-      branch: master
-
   - name: amido-chatbots-notify
     type: notification
     integration: amido-chatbots
@@ -23,7 +16,6 @@ jobs:
   - name: provisioning-infrastructure
     type: runSh
     steps:
-      - IN: github_chatbot_170_infrastructure
       - IN: azure_cli_configuration
       - TASK:
         - script: |
