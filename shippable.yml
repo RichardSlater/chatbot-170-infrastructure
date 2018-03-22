@@ -12,6 +12,11 @@ resources:
       recipients:
         - "#chatbots"
 
+  - name: scheduled_deprovisioning
+    type: time
+    versionTemplate:
+      interval: "30 22 * * *"
+
 jobs:
   - name: provisioning
     type: runSh
@@ -49,6 +54,7 @@ jobs:
     steps:
       - IN: azure_cli_configuration
       - IN: chatbot-170-infrastructure_master_rSync
+      - IN: scheduled_deprovisioning
         switch: off
       - TASK:
         - script: |
