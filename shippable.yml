@@ -17,7 +17,7 @@ jobs:
     type: runSh
     steps:
       - IN: azure_cli_configuration
-      - IN: chatbot-170-infrastructure_master
+      - IN: chatbot-170-infrastructure_master_rSync
       - TASK:
         - script: |
             export TF_VERSION=0.11.5
@@ -48,7 +48,7 @@ jobs:
     type: runSh
     steps:
       - IN: azure_cli_configuration
-      - IN: chatbot-170-infrastructure_master
+      - IN: chatbot-170-infrastructure_master_rSync
         switch: off
       - TASK:
         - script: |
