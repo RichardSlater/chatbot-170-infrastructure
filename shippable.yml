@@ -20,7 +20,7 @@ jobs:
       - IN: chatbot-170-infrastructure_master
       - TASK:
         - script: |
-            export TF_VERSION=0.11.3
+            export TF_VERSION=0.11.5
             export TF_FILE=terraform_"$TF_VERSION"_linux_amd64.zip
             mkdir -p /tmp/terraform
             wget -nv https://releases.hashicorp.com/terraform/$TF_VERSION/$TF_FILE
@@ -53,7 +53,7 @@ jobs:
         switch: off
       - TASK:
         - script: |
-            export TF_VERSION=0.11.3
+            export TF_VERSION=0.11.5
             export TF_FILE=terraform_"$TF_VERSION"_linux_amd64.zip
             mkdir -p /tmp/terraform
             wget -nv https://releases.hashicorp.com/terraform/$TF_VERSION/$TF_FILE
