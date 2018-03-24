@@ -1,13 +1,14 @@
-TF_TARGET_VERSION=$1
+#!/bin/bash
 
 if [ $# -eq 0 ]
   then
     echo "No arguments supplied"
-    exit 0
+    exit 1
 fi
 
-if hash terraform 2>/dev/null; then
-  TF_CURR_VERSION=$(terraform --version | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
+if hash terraform 2>/dev/null
+  then
+    TF_CURR_VERSION=$(terraform --version | sed 's/[^0-9.]*\([0-9.]*\).*/\1/')
 fi
 
 if [ "$TF_CURR_VERSION" == "$TF_TARGET_VERSION" ]

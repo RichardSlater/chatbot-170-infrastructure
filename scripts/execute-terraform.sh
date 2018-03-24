@@ -1,11 +1,15 @@
+#!/bin/bash
+
 if [ $# -eq 0 ]
   then
     echo "No arguments supplied, specify either 'apply' or 'destroy'."
+    exit 1
 fi
 
-if [ ($1 != "apply") && ($1 != "destroy") ]
+if [[ "$1" != "apply" && "$1" != "destroy" ]]
   then
     echo "Invalid argument supplied, specify either 'apply' or 'destroy'."
+    exit 1
 fi
 
 cd "$CHATBOT170INFRASTRUCTURE_MASTER_STATE"
