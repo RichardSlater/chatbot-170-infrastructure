@@ -17,12 +17,12 @@ terraform --version
 terraform init
 terraform get
 
-if [($1 == 'apply')]
+if [[ $1 == 'apply' ]]
   then
     terraform apply --auto-approve
 fi
 
-if [($1 == 'destroy')]
+if [[ $1 == 'destroy' ]]
   then
     terraform destroy -force
 fi
