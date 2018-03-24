@@ -6,7 +6,7 @@ if [ ($1 != "apply") && ($1 != "destroy") ] then
   echo "Invalid argument supplied, specify either 'apply' or 'destroy'."
 fi
 
-cd "$CHATBOT170INFRASTRUCTURE_MASTER_RSYNC_STATE"
+cd "$CHATBOT170INFRASTRUCTURE_MASTER_STATE"
 terraform --version
 terraform init
 terraform get
