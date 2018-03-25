@@ -14,15 +14,21 @@ fi
 
 cd "$CHATBOT170INFRASTRUCTURE_MASTER_STATE"
 terraform --version
+
 terraform init
 terraform get
 
+mkdir -p "$CHATBOT170INFRASTRUCTURE_MASTER_STATE/plan"
+TF_PLAN="$CHATBOT170INFRASTRUCTURE_MASTER_STATE/plan/terraform.tfplan"
+
 if [[ $1 == 'apply' ]]
   then
-    terraform apply --auto-approve
+    terraform plan -out="$TF_PLAN"
 fi
 
 if [[ $1 == 'destroy' ]]
   then
-    terraform destroy --auto-approve
+    terraform plan -destroy -out="$TF_PLAN"
 fi
+
+terraform apply -auto-approve "$TF_PLAN"
