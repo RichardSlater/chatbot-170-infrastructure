@@ -12,14 +12,14 @@ if [[ "$1" != "apply" && "$1" != "destroy" ]]
     exit 1
 fi
 
-cd "$GITHUB_CB170_INFRA_MASTER_STATE"
+cd "$CB170_INFRA_MASTER_STATE"
 terraform --version
 
 terraform init
 terraform get
 
-mkdir -p "$GITHUB_CB170_INFRA_MASTER_STATE/plan"
-TF_PLAN="$GITHUB_CB170_INFRA_MASTER_STATE/plan/terraform.tfplan"
+mkdir -p "$CB170_INFRA_MASTER_STATE/plan"
+TF_PLAN="$CB170_INFRA_MASTER_STATE/plan/terraform.tfplan"
 
 if [[ $1 == 'apply' ]]
   then
