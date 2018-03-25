@@ -24,5 +24,5 @@ fi
 
 if [[ $1 == 'destroy' ]]
   then
-    terraform destroy -force
+    terraform destroy --auto-approve
 fi
