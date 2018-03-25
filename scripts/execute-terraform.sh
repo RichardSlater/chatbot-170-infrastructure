@@ -21,14 +21,26 @@ terraform get
 mkdir -p "$CB170_INFRA_MASTER_STATE/plan"
 TF_PLAN="$CB170_INFRA_MASTER_STATE/plan/terraform.tfplan"
 
+TF_APPLY_REQD=0
 if [[ $1 == 'apply' ]]
   then
-    terraform plan -out="$TF_PLAN"
+    terraform plan -detailed-exitcode -out="$TF_PLAN"
+    TF_APPLY_REQD=$?
 fi
 
 if [[ $1 == 'destroy' ]]
   then
-    terraform plan -destroy -out="$TF_PLAN"
+    terraform plan -detailed-exitcode -destroy -out="$TF_PLAN"
+    TF_APPLY_REQD=$?
 fi
 
-terraform apply -auto-approve "$TF_PLAN"
+if [[ $TF_APPLY_REQD == 1 ]]
+  then
+    echo "Error occured."
+    exit 1
+fi
+
+if [[ $TF_APPLY_REQD == 2 ]]
+  then
+    terraform apply -auto-approve "$TF_PLAN"
+fi
