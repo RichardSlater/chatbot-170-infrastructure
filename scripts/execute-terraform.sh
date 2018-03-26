@@ -42,5 +42,8 @@ fi
 
 if [[ $TF_APPLY_REQD == 2 ]]
   then
+    echo "Plan contains pending actions."
     terraform apply -auto-approve "$TF_PLAN"
+  else
+    echo "No changes, exiting without calling apply."
 fi
