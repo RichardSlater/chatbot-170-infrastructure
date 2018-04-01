@@ -60,3 +60,7 @@ typings/
 # terraform state
 .terraform
 terraform.tfstate*
+
+# compiled python
+*.pyc
+__pycache__
